@@ -74,7 +74,7 @@ The number of keys is in the order mentioned in the paper (order of 1000), altho
 
 Figure \ref{fig1} shows the found keypoints using the SIFT method. The figure shows that in areas with much detail, many keypoints are found and in areas with little detail, few keypoints are found. Since bright pixels are given as high values in a grayscale image, the keypoint vectors point from darker areas to brighter areas. In general we can see the keypoint vectors with the highest magnitude in areas containing highest contrast transition (edges), such as the black book with the light gray background, or the dark grey books contrasting with the white background. 
 
-However, we do observe some vectors that seem strangely placed, such as the long arrow in the right upper corner. The origin of this vector is not localized at an edge. We can attribute this phenomenon to the usage of multiple pyramid levels in the scale space in the process of finding the key points. When the number of pixels is highly reduced for the same image (i.e. the scale is increased), one pixel represents the average grayscale value of multiple pixels in an area of the image. In this higher scale some pixels might have a high difference in contrast, resulting in a key point between them. However, this keypoint can be localized at a certain x,y location that is in the middle of a plane instead of at an edge.
+However, we do observe some vectors that seem strangely placed, such as the long arrow in the right upper corner. The origin of this vector is not localized at an edge. We can attribute this phenomenon to the usage of multiple pyramid levels in the scale space during the process of finding the key points. When the number of pixels is highly reduced for the same image (i.e. the scale is increased), one pixel represents the average grayscale value of multiple pixels in the image in a lower scale. In this higher scale some pixels might have a high difference in contrast, resulting in a key point between them. However, this keypoint can be localized at a certain x,y location that is in the middle of a plane instead of at an edge in the original scale. For the example of the long arrow in the right upper corner, the keypoint is probably surrounded by pixels that contain mainly darkness from the black book on one hand, and on the other hand pixels that mostly contain brightness from the bright background. 
 \begin{figure}[H]
  \centering
  \includegraphics[width=.7\textwidth]{keypoints.png}
@@ -82,10 +82,67 @@ However, we do observe some vectors that seem strangely placed, such as the long
  \label{fig1}
 \end{figure}
 
+Figure \ref{fig2} shows the matches between the two images. The script reports 98 matches. This corresponds to $98/882 = 11.11\%$ of the keypoints found in `book.pgm' matched with $98/1021 = 9.60\%$ of the keypoints found in the `scene.pgm'. Not all matches are correct. We observe for example that the match found with the upper left corner of the small image is incorrect, but it is reasonable, since both of the keypoints are found in a square corner of a gray area with a black background. Another example is the match found between the lower left corner of the Basmati rice pack and an area on the illustration on the book. This match is reasonable to the extent of the pixels looking similar, but not in respect of the context, which is clearly different; a human can easily distinguish the contexts (one keypoint is localized in an illustration, whereas the other one is part of a rice pack).
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=1\textwidth]{matches.png}
+ \caption{Matches between `scene.pgm' and `book.pgm' using SIFT.}
+ \label{fig2}
+\end{figure}
+
+Figure \ref{fig3} shows the matches between the two images. The script reports 98 matches. This corresponds to $34/579 = 5.87\%$ of the keypoints found in `book.pgm' matched with $34/1021 = 3.33\%$ of the keypoints found in the `scene.pgm'. Again not all matches are correct. There is one clearly incorrect match between the top of the basmati pack and the edge between the chair and wall. This match is quite reasonable, since the gray color of the wall and pack are similar, just as the color of the chair and background in `basmati.pgm'. Moreover in both cases the edge is close to a straight line.
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=1\textwidth]{matches2.png}
+ \caption{Matches between `scene.pgm' and `basmati.pgm' using SIFT.}
+ \label{fig3}
+\end{figure}
+
+Table \ref{table1} shows a comparison between the two street images when matched with the five detail images. In `streetlarge.png' 5316 keypoints are found and in `street.png' 1452, so the number is much higher in the higher resolution image. Table \ref{table1} shows that also the number of matches found is much higher for the higher resolution image. The table shows that the percentage of keypoints of the detail images that is matched is around 3 to 4 times as high for the high resolution image as it is for the lower resolution image. The percentage of keypoints of the street images that is matches is slightly higher for the lower resolution street image.
+
+Even though the number of found matches is much higher for the high resolution image, the percentage of mismatches is also a lot higher for all images except for `detail1.png'. This shows that a higher resolution image does not always improve the match. This has to do with the fact that in a high resolution image, more details are given. Details cause more keypoints to be found, but these keypoints only describe small textures that do not contribute to matching the object in general. Instead they can cause faulty matches, since they cause more contrasting pixels.
+
+\begin{table}[H]
+ \centering
+ \caption{Matches ($m$), mismatches ($mism$) and matches $/$ keypoints ($k$) between `street.png' and `streetlarge.png' and the five details. Mismatches were hard to distinguish exactly, so the table gives the lower bound of the mismatch percentages.}
+ \label{table1}
+ \begin{tabular}{|c|c|c|c|c||c|c|c|c|}
+ \hline
+ & \multicolumn{4}{c||}{Street small} & \multicolumn{4}{c|}{Street large} \\
+ \hline
+  Detail & $m$ & $m/k$ (detail) & $m/k$(street) & $mism$ & $m$ & $m/k$ (detail) & $m/k$(street) & $mism$ \\
+  \hline
+  1 & 25 & $1.57\%$ & $1.72\%$ & $4\%$ & 82 & $5.15\%$ & $1.54\%$ & $3.66\%$ \\
+  2 & 6 & $13.04\%$ & $0.41\%$ & $0\%$ & 17 & $36.96\%$ & $0.32\%$ & $23.53\%$ \\
+  3 & 37 & $6.29\%$ & $2.55\%$ & $0\%$ & 110 & $18.71\%$ & $2.07\%$ & $21.82\%$ \\
+  4 & 20 & $5.43\%$ & $1.38\%$ & $10\%$ & 73 & $19.84\%$ & $1.37\%$ & $21.92\%$ \\
+  5 & 6 & $4.76\%$ & $0.41\%$ & $16.67\%$ & 17 & $14.49\%$ & $0.32\%$ & $47.06\%$ \\
+  \hline
+ \end{tabular}
+\end{table}
+
+\subsection{}
+
+\begin{table}[H]
+ \caption{}
+ \label{table2}
+ \begin{tabular}{|c|c|c|c|}
+ \hline
+  Detail & $m$ & $m/k$ (detail) ($\%$) & $m/k$(scene)($\%$) \\
+  \hline
+  1 & 1 & & \\
+  2 & 0 & & \\
+  3 & 0 & & \\
+  4 & 2 & & \\
+  5 & 0 & & \\
+  \hline
+ \end{tabular}
+\end{table}
 
 
-\begin{appendices}
-\section{Code}
- %\lstinputlisting[caption={circorr},label={code:1a}]{../code/circorr.m}
-\end{appendices}
+%\begin{appendices}
+%\section{Code}
+% %\lstinputlisting[caption={circorr},label={code:1a}]{../code/circorr.m}
+%\end{appendices}
 \end{document}
