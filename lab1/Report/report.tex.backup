@@ -49,7 +49,7 @@
 }
 
 \lstset{style=mystyle, language=Matlab}
-\renewcommand{\thesubsection}{\small(\alph{subsection})}
+\renewcommand{\thesubsection}{Exercise \arabic{subsection}}
 
 \title{Computer Vision - Lab 1}
 \author{Luuk Boulogne (s2366681) \and Steven Bosch (s1861948)}
@@ -123,23 +123,71 @@ Even though the number of found matches is much higher for the high resolution i
 \end{table}
 
 \subsection{}
+Tables \ref{table2} and \ref{table3} show the matches between the outdoor detail images and the indoor scene image and vice versa. In both of the situations a small number of matches is found, which is logical because the details are not present in the scenic images, which essentially makes every match a mismatch. 
+
+It would not be advisable to use a threshold using the absolute number of matches, because that would depend heavily on the pictures themselves. Sometimes an image has many keypoints, making many matches possible, but in other instances an image has few keypoints, limiting the number of possible matches. Therefore looking at the percentage of matches of keypoints would be a better measure to use. 
+
+Looking at the statistics, a threshold of the percentage might be possible. However, this would be impossible using the percentage of the larger image (the scene), since it differs per scenic image how much of its keypoints are made up out of the specific object you want to match, resulting in a difference of percentages per scene image. It would therefore be logical to use the percentage of the smaller image for the threshold (under the assumption that this just contains the object we want to match). Of course we would need more data to properly set a threshold, but looking at the column `$m/k$ (detail) (\%)' and the data in table \ref{table1}, a threshold of somewhere around 1 \% might be in order for situations in which you would not want false negatives, for example in the case of diagnosing a patient. Using this threshold, detail 4 in table \ref{table2} would be falsely classified as a match, but the other details would be correctly classified. On the other hand if false positives would be disfavoured, the threshold would have to be set higher, for example at 6 \%.
 
 \begin{table}[H]
- \caption{}
+\centering
+ \caption{Matches found between the outdoor detail images and the indoor scene image.}
  \label{table2}
  \begin{tabular}{|c|c|c|c|}
  \hline
   Detail & $m$ & $m/k$ (detail) ($\%$) & $m/k$(scene)($\%$) \\
   \hline
-  1 & 1 & & \\
-  2 & 0 & & \\
-  3 & 0 & & \\
-  4 & 2 & & \\
-  5 & 0 & & \\
+  1 & 1 & 0.06 & 0.10 \\
+  2 & 0 & 0 & 0 \\
+  3 & 0 & 0 & 0 \\
+  4 & 2 & 5.4 & 0.20 \\
+  5 & 0 & 0 & 0 \\
   \hline
  \end{tabular}
 \end{table}
 
+\begin{table}[H]
+\centering
+ \caption{Matches found between the indoor detail images and the outdoor scene image.}
+ \label{table3}
+ \begin{tabular}{|c|c|c|c||c|c|c|}
+ \hline
+ & \multicolumn{3}{c||}{Street small} & \multicolumn{3}{c|}{Street large} \\
+ \hline
+  Detail & $m$ & $m/k$ (detail) ($\%$) & $m/k$(street) ($\%$) & $m$ & $m/k$ (detail) ($\%$) & $m/k$(street) ($\%$) \\
+  \hline
+  Book & 1 & 0.11 & 0.07 & 6 & 0.68 & 0.11 \\
+  Basmati & 1 & 0.17 & 0.07 & 3 & 0.52 & 0.06 \\
+  \hline
+ \end{tabular}
+\end{table}
+
+\subsection{}
+Table \ref{table4} shows the data for the rotated book images matched matched to the scene image. The distribution of matches has the following properties: $\mu = 101.10$ and $\sigma \approx 4.01$. So the number of matches does not deviate very much from the mean for different rotations of the image. Therefore the degree to which SIFT is rotation invariant is quite high. We can also deduce this from the number of mismatches, which remains quite low for every rotation. 
+
+\begin{table}[H]
+\centering
+ \caption{Matches found between the rotated book images and the indoor scene image.}
+ \label{table4}
+ \begin{tabular}{|c|c|c|c|c|}
+ \hline
+  Rotation & $m$ & $m/k$ (detail) ($\%$) & $m/k$(scene)($\%$) & $mism$\\
+  \hline
+  0 & 98 & 11.11 & 9.60 & 2 \\
+  10 & 102 & 10.01 & 9.99 & 1 \\
+  20 & 95 & 9.35 & 9.30 & 0 \\
+  30 & 107 & 10.38 & 10.48 & 2 \\
+  40 & 101 & 9.57 & 9.89 & 2 \\
+  50 & 100 & 9.48 & 9.79 & 2 \\
+  60 & 102 & 9.69 & 9.99 & 1 \\
+  70 & 102 & 10.01 & 9.99 & 1 \\
+  80 & 107 & 10.27 & 10.48 & 2 \\
+  90 & 103 & 11.39 & 10.09 & 0 \\
+  180 & 98 & 10.80 & 9.60 & 1 \\
+  270 & 98 & 10.71 & 9.60 & 3 \\
+  \hline
+ \end{tabular}
+\end{table}
 
 %\begin{appendices}
 %\section{Code}
