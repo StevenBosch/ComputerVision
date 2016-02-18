@@ -163,7 +163,7 @@ Looking at the statistics, a threshold of the percentage might be possible. Howe
 \end{table}
 
 \subsection{}
-Table \ref{table4} shows the data for the rotated book images matched matched to the scene image. The distribution of matches has the following properties: $\mu = 101.10$ and $\sigma \approx 4.01$. So the number of matches does not deviate very much from the mean for different rotations of the image. Therefore the degree to which SIFT is rotation invariant is quite high. We can also deduce this from the number of mismatches, which remains quite low for every rotation. 
+Table \ref{table4} shows the data for the rotated book images matched to the scene image. The distribution of matches has a mean of 101.10 and a standard deviation of approximately 4.01. So the number of matches deviates little from the mean for different rotations of the image. Furthermore we can see that the percentages of number of matches in the keypoints remain approximately stable, as well as the number of mismatches which remains quite low with a maximum of 3, corresponding to a maximum of $3/98 \approx 0.03 \% $ of the total number of matches). All this suggests that the degree in which SIFT is rotation invariant is quite high, although not perfect.
 
 \begin{table}[H]
 \centering
@@ -188,6 +188,9 @@ Table \ref{table4} shows the data for the rotated book images matched matched to
   \hline
  \end{tabular}
 \end{table}
+
+\subsection{}
+Figure \ref{fig4} shows the number of matches plotted as a function of the number of pixels shear applied. It is clear that the more pixels shear applied 
 
 %\begin{appendices}
 %\section{Code}
