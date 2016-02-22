@@ -367,7 +367,7 @@ if get(gcbo,'Value')==1
    PathName='./images/';
    ExampleNo=1;
 else
-   FileName='u64.pgm';
+   FileName='U64.pgm';
    PathName='./images/';
    ExampleNo=2;
 end
