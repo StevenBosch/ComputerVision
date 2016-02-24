@@ -106,13 +106,13 @@ Finally, when dmax is small, the snake finds a good solution, but because there 
 When testing the effects of the resolution parameters, the application indeed ran slower with very high resolution snakes. Also the cavity was not found for low resolution GVF snakes as expected. However, we did not find an instance of the first problem mentioned for low resolution snakes using a standard vector force field. This might have to do with the fact that the application does not support initial values of dmin that are higher than 1.
 
 \renewcommand{\thesubsection}{\large{Exercise \arabic{subsection}}}
-\section{Exercises}
+\section{Exercise questions}
 \subsection{}
 The most inportant differences in behaviour between GVF and classical snakes for the u shape are the following. 
 
 Firstly, when not smoothing the image, the classical snake cannot approximate the contour of the cavity while the GVF snake can. The classical snake experiences only horizontal forces at the inner edges of the fingers. Therefore it is not propegated into the cavity (see \ref{fig1a}). With GVF, the nodes inbetween the fingers do experience downwards forces and there does succeed in finding the cavity (see \ref{fig1b}).
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \begin{subfigure}{0.49\textwidth}
   \centering
@@ -126,12 +126,12 @@ Firstly, when not smoothing the image, the classical snake cannot approximate th
   \caption{The U-shape using the GVF snake ($\mu=0.1, Iterations=90, \alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2,Iterat=400$).}
   \label{fig1b}
 \end{subfigure}
-\caption{Results for the noon-smoothed image of the U-shape.}
+\caption{Results for the non-smoothed image of the U-shape.}
 \end{figure}
 
 Furthermore if the snake is initialized within the U-shape, the GVF can sometimes still find the right solution, because there is an external force field within the shape. The classical snake however, if initialized too far from the edges, can never find the right shape, because of the lack of force vectors. Instead it shrinks down because of the internal force. See also figure \ref{fig2}.
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \begin{subfigure}{0.49\textwidth}
   \centering
@@ -145,30 +145,190 @@ Furthermore if the snake is initialized within the U-shape, the GVF can sometime
   \caption{Results of the classical snake when initialized within the U-shape after 400 iterations ($\alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2,Iterat=400$).}
   \label{fig2b}
 \end{subfigure}
-\caption{Initializing the snake within the U-shape.}
-\label{fig2}
 \begin{subfigure}{0.49\linewidth}
   \centering
   \includegraphics[width=\linewidth]{fig3.png}
   \caption{Results of the classical snake for a smoothed image with $\sigma=3$ ($\alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2,Iterat=400$).}
-  \label{fig3}
+  \label{fig2c}
 \end{subfigure}
+\caption{Initializing the snake within the U-shape.}
+\label{fig2}
 \end{figure}
 
 Also, because of the small capture range of the classical snake with respect to the GVF snake, the classical snake converges more slowly than the GVF snake when it is initialized as a large circle around the u shape. 
 
 We consider the GVF snake to perform better than the classical snake because of the reasons mentioned above. 
 
-Finally, as stated above, the classical snake does not converge into the 'dip' unless image is smoothed with a large enough sigma (see figure \ref{fig3}). GVF is also able to converge into the 'dip' when the image is not smoothed (figure \ref{fig1b}).
+Finally, as stated above, the classical snake does not converge into the 'dip' unless image is smoothed with a large enough sigma (see figure \ref{fig2c}). GVF is also able to converge into the 'dip' when the image is not smoothed (figure \ref{fig1b}).
 
 
 
 \subsection{}
-If the snakes are initialized as a circle around the room, classical snakes converge very well, given enough iterations. GVF snakes need less iterations to converge, but they represent the corners in the figure less accurately. This is because of the smoothing term in equation 12 of the paper. This smoothing causes the force vectors around a corner to point towards the location where the force vectors pointing towards the perpendicular edges are averaged. 
+If the snakes are initialized as a circle around the room, classical snakes converge very well, given enough iterations. GVF snakes need less iterations to converge, but they represent the corners in the figure less accurately. This is because of the smoothing term in equation 12 of the paper. This smoothing causes the force vectors around a corner to point towards the location where the force vectors pointing towards the perpendicular edges are averaged.
+
+\begin{figure}[h!]
+\centering
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig3a.png}
+  \caption{The room-shape using the classical snake ($\alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2,Iterat=1000$).}
+  \label{fig3a}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig3b.png}
+  \caption{The room-shape using the GVF snake ($\mu=0.1, Iterations=90, \alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2,Iterat=400$).}
+  \label{fig3b}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig3c.png}
+  \caption{The room-shape using a classical snake with a smaller radius than the room ($\mu=0.1, Iterations=90, \alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2,Iterat=1000$).}
+  \label{fig3c}
+\end{subfigure}
+\caption{Results for the non-smoothed image of the room-shape.}
+\label{fig3}
+\end{figure}
 
 The performance of the GVF is quite robust with respect to the initialization, while the classical snake is not. If (a part of) the left and/or right niche is not inside the initialized snake, the classical snake does not approximate the shape of the niche correctly. This is because of the same reason as that it was unable to find the cavity in the u shape as explained in exercise 1.
 
 \subsection{}
+When using the classical snake, the shape of the lungs is not approximated well for any parameter setting, without smoothing the image first. When the image is smoothed with $\sigma$ = 3, the left edge of the left lung and almost the entire right lung are approximated well (see figure \ref{fig4}). This is because the smoothing causes the radius in which an edge causes force vectors to point towards it to become larger. Even though the entire snake is initialized within the lung and therefore the internal forces do not automatically cause the snake to converge towards the shape, when the image is smoothed external forces are enough in this case to propagate the nodes of snake towards the edges.
 
+\begin{figure}[h!]
+\centering
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{chestLeftclassical.png}
+  \caption{The left chest at convergence ($\alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2,Iterat=400$).}
+  \label{fig4a}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{chestRightclassical.png}
+  \caption{The right chest at convergence ($\alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2$).}
+  \label{fig4b}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{chestLeftGFV.png}
+  \caption{The left chest at convergence ($\mu=0.1, Iterations=90, \alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2$).}
+  \label{fig4c}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{chestRightGFV.png}
+  \caption{The right chest at convergence ($\mu=0.1, Iterations=90, \alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2$).}
+  \label{fig4d}
+\end{subfigure}
+\caption{Results for the smoothed image ($\sigma=3$) of the chest using the classical snake and the non-smoothed image using the GVF snake, using the initial locations of the provided .mat files.}
+\label{fig4}
+\end{figure}
+
+With GVF, the shape of both lungs can be approximated quite well, even without smoothing (see figure \ref{fig4c} and \ref{fig4d}. This is because now, external forces cause the snake to converge to the shape of the lungs, because of the first term of equation 12 in the paper. There are some edges within the left lung that some nodes of the snake stick to, especially when no smoothing is applied. In the right lung, the bottom edge of the lung is ignored. This is because of the large force caused by the sharper edge below this bottom edge.
+
+\subsection{}
+
+\subsection{}
+Figure \ref{fig6} shows the results for the non-smoothed heart images, using the initializations defined in heart.mat and heart1.mat. The figure shows that the classical snake does not perform very well. This can be well explained by its force vector field, which is shown in figure \ref{fig7a}. As we can observe, the force vectors are `all over the place'. There is no clear direction to be discovered in the force vectors, which is probably caused by the noise in the image. Therefore the resulting snakes (figures \ref{fig6a} and \ref{fig6b}) show no clear smoothed lines.
+On the other hand the force vector field of the GVF method shows much clearer patterns (see figure \ref{fig7b}, resulting in far better results figures \ref{fig6c} and \ref{fig6d}).
+
+When we smooth the image with $\sigma=3$, we get the results shown in \ref{fig8}.
+
+\begin{figure}[h!]
+\centering
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig6a.png}
+  \caption{The classical snake using initialization heart.mat ($\alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2, Iterations=400$).}
+  \label{fig6a}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig6b.png}
+  \caption{The classical snake using initialization heart1.mat ($\alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2, Iterations=400$).}
+  \label{fig6b}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig6c.png}
+  \caption{The GVF snake using initialization heart.mat ($\mu=0.1, Iterations=90, \alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2, Iterations=400$).}
+  \label{fig6c}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig6d.png}
+  \caption{The GVF snake using initialization heart1.mat ($\mu=0.1, Iterations=90, \alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2, Iterations=400$).}
+  \label{fig6d}
+\end{subfigure}
+\caption{Results for the non-smoothed heart image.}
+\label{fig6}
+\end{figure}
+
+
+\begin{figure}[h!]
+\centering
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig7a.png}
+  \caption{The force vector field for the classical snake.}
+  \label{fig7a}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig7b.png}
+  \caption{The force vector field for GVF ($\mu = 0.1, Iterations=80$).}
+  \label{fig7b}
+\end{subfigure}
+\caption{Force vector fields for heart.pgm.}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig8a.png}
+  \caption{The classical snake using initialization heart.mat ($\alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2, Iterations=400$).}
+  \label{fig8a}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig8b.png}
+  \caption{The classical snake using initialization heart1.mat ($\alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2, Iterations=400$).}
+  \label{fig8b}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig8c.png}
+  \caption{The GVF snake using initialization heart.mat ($\mu=0.1, Iterations=90, \alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2, Iterations=400$).}
+  \label{fig8c}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig8d.png}
+  \caption{The GVF snake using initialization heart1.mat ($\mu=0.1, Iterations=90, \alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2, Iterations=400$).}
+  \label{fig8d}
+\end{subfigure}
+\caption{Results for the smoothed heart image ($\sigma=3$).}
+\label{fig8}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig9a.png}
+  \caption{The force vector field for the classical snake.}
+  \label{fig9a}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig9b.png}
+  \caption{The force vector field for GVF ($\mu = 0.1, Iterations=80$).}
+  \label{fig9b}
+\end{subfigure}
+\caption{Force vector fields for the smoothed heart.pgm ($\sigma=3$).}
+\label{fig9}
+\end{figure}
 
 \end{document}
