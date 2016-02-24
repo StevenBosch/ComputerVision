@@ -110,15 +110,7 @@ When testing the effects of the resolution parameters, the application indeed ra
 \subsection{}
 The most inportant differences in behaviour between GVF and classical snakes for the u shape are the following. 
 
-Firstly, when not smoothing the image, the classical snake cannot approximate the contour of the cavity while the GVF snake can. The classical snake experiences only horizontal forces at the inner edges of the fingers. Therefore it is not propegated into the cavity (see \ref{fig1}). With GVF, the nodes inbetween the fingers do experience downwards forces.
-
-\begin{figure}
- \centering
- \includegraphics[width=.45\textwidth]{fig1.png}
- \caption{The U-shape using the classical snake ($\alpha=0.05)}
- \label{fig1}
-\end{figure}
-
+Firstly, when not smoothing the image, the classical snake cannot approximate the contour of the cavity while the GVF snake can. The classical snake experiences only horizontal forces at the inner edges of the fingers. Therefore it is not propegated into the cavity. With GVF, the nodes inbetween the fingers do experience downwards forces.
 
 Furthermore, the GVF snake also finds a good solution when it is initialized entirely within the u shape, while the classical snake does not, because the GVF snake has external forces within the u shape, while classical snake lacks these. 
 
@@ -129,11 +121,7 @@ We consider the GVF snake to perform better than the classical snake because of 
 Finally, as stated above, the classical snake does not converge into the 'dip' except when the image is smoothed with a large enough sigma. GVF is also able to converge into the 'dip' when the image is not smoothed. 
 
 \subsection{}
-If the snakes are initialized as a circle around the room, classical snakes converge very well, given enough iterations. GVF snakes need less iterations to converge, but they represent the corners in the figure less accurately. This is because of the smoothing term in equation 12 of the paper. This smoothing causes the force vectors around a corner to point towards the location where the force vectors pointing towards the perpendicular edges are averaged. 
-
-The performance of the GVF is quite robust with respect to the initialization, while the classical snake is not. If (a part of) the left and/or right niche is not inside the initialized snake, the classical snake does not approximate the shape of the niche correctly. This is because of the same reason as that it was unable to find the cavity in the u shape as explained in exercise 1.
-
-\subsection{}
+If the snakes are initialized as a circle around the room, classical snakes converge very well, given enough iterations. GVF snakes need less iterations to converge, but they represent the corners in the figure less accurately. We think this is the case, because near the corners, both perpendicular lines pull the node in their direction equally
 
 
 \end{document}
