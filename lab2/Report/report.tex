@@ -383,6 +383,37 @@ However, for different initializations than the two that were supplied, both of 
 \end{figure}
 
 \subsection{}
+A positive side of this method is that it delivers a digital contour that can be used as input for other software. Also, with human assistence the method is able to approximate contours neatly with only little effort of the human. On the other hand, this is also the method's main pitfall: it is unable to do anything properly without human intervention.
 
+We therefore think that the key problem of snake-based segmentation is that it cannot work autonomously. The reasons for this are the following.
+First of all, snakes needs to be initialized in a way so that it can find the shape. Therefore snake-based segmentation cannot work autonomously for new images. 
+Also, there are many parameters that should be tweaked to find the best solution that the method can produce. Optimal parameter settings are not known for new images and thus the optimal solution cannot be found without human intervention.
+Finally, there is no given performance measure for the optimality of the solution. Again, a human has to evaluate the reached solution.
+
+The two methods can be combined in a way to get better results. For example with 'room.pgm', the classical snake only finds a good solution if the entire room is inside the snake at the initialization. The GVF approach does always find a good solution, but it doesn't represent the corners very well. By first letting the GVF snake find a solution and afterwards optimizing this solution with the classical snake, the better solution can be found even if not the entire room is inside the snake at the initialisation. For these results, see figure \ref{fig10}.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{6roomInit.png}
+  \caption{Initialization.}
+  \label{fig10a}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{6roomGVF.png}
+  \caption{The contour after using GVF.}
+  \label{fig10b}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{6roomGVFthenClassical.png}
+  \caption{The contour after using the classical method on the GVF method.}
+  \label{fig10c}
+\end{subfigure}
+\caption{Results of the contour detection of the GVF method and consequently the classical method for the non smoothed room image.}
+\label{fig10}
+\end{figure}
 
 \end{document}
