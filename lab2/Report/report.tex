@@ -106,7 +106,7 @@ Finally, when dmax is small, the snake finds a good solution, but because there 
 When testing the effects of the resolution parameters, the application indeed ran slower with very high resolution snakes. Also the cavity was not found for low resolution GVF snakes as expected. However, we did not find an instance of the first problem mentioned for low resolution snakes using a standard vector force field. This might have to do with the fact that the application does not support initial values of dmin that are higher than 1.
 
 \renewcommand{\thesubsection}{\large{Exercise \arabic{subsection}}}
-\section{Exercises}
+\section{Exercise questions}
 \subsection{}
 The most inportant differences in behaviour between GVF and classical snakes for the u shape are the following. 
 
@@ -126,7 +126,7 @@ Firstly, when not smoothing the image, the classical snake cannot approximate th
   \caption{The U-shape using the GVF snake ($\mu=0.1, Iterations=90, \alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2,Iterat=400$).}
   \label{fig1b}
 \end{subfigure}
-\caption{Results for the noon-smoothed image of the U-shape.}
+\caption{Results for the non-smoothed image of the U-shape.}
 \end{figure}
 
 Furthermore if the snake is initialized within the U-shape, the GVF can sometimes still find the right solution, because there is an external force field within the shape. The classical snake however, if initialized too far from the edges, can never find the right shape, because of the lack of force vectors. Instead it shrinks down because of the internal force. See also figure \ref{fig2}.
@@ -145,26 +145,50 @@ Furthermore if the snake is initialized within the U-shape, the GVF can sometime
   \caption{Results of the classical snake when initialized within the U-shape after 400 iterations ($\alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2,Iterat=400$).}
   \label{fig2b}
 \end{subfigure}
-\caption{Initializing the snake within the U-shape.}
-\label{fig2}
 \begin{subfigure}{0.49\linewidth}
   \centering
   \includegraphics[width=\linewidth]{fig3.png}
   \caption{Results of the classical snake for a smoothed image with $\sigma=3$ ($\alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2,Iterat=400$).}
-  \label{fig3}
+  \label{fig2c}
 \end{subfigure}
+\caption{Initializing the snake within the U-shape.}
+\label{fig2}
 \end{figure}
 
 Also, because of the small capture range of the classical snake with respect to the GVF snake, the classical snake converges more slowly than the GVF snake when it is initialized as a large circle around the u shape. 
 
 We consider the GVF snake to perform better than the classical snake because of the reasons mentioned above. 
 
-Finally, as stated above, the classical snake does not converge into the 'dip' unless image is smoothed with a large enough sigma (see figure \ref{fig3}). GVF is also able to converge into the 'dip' when the image is not smoothed (figure \ref{fig1b}).
+Finally, as stated above, the classical snake does not converge into the 'dip' unless image is smoothed with a large enough sigma (see figure \ref{fig2c}). GVF is also able to converge into the 'dip' when the image is not smoothed (figure \ref{fig1b}).
 
 
 
 \subsection{}
-If the snakes are initialized as a circle around the room, classical snakes converge very well, given enough iterations. GVF snakes need less iterations to converge, but they represent the corners in the figure less accurately. This is because of the smoothing term in equation 12 of the paper. This smoothing causes the force vectors around a corner to point towards the location where the force vectors pointing towards the perpendicular edges are averaged. 
+If the snakes are initialized as a circle around the room, classical snakes converge very well, given enough iterations. GVF snakes need less iterations to converge, but they represent the corners in the figure less accurately. This is because of the smoothing term in equation 12 of the paper. This smoothing causes the force vectors around a corner to point towards the location where the force vectors pointing towards the perpendicular edges are averaged.
+
+\begin{figure}
+\centering
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig3a.png}
+  \caption{The room-shape using the classical snake ($\alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2,Iterat=1000$).}
+  \label{fig3a}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig3b.png}
+  \caption{The room-shape using the GVF snake ($\mu=0.1, Iterations=90, \alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2,Iterat=400$).}
+  \label{fig3b}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig3c.png}
+  \caption{The room-shape using a classical snake with a smaller radius than the room ($\mu=0.1, Iterations=90, \alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2,Iterat=1000$).}
+  \label{fig3c}
+\end{subfigure}
+\caption{Results for the non-smoothed image of the room-shape.}
+\label{fig3}
+\end{figure}
 
 The performance of the GVF is quite robust with respect to the initialization, while the classical snake is not. If (a part of) the left and/or right niche is not inside the initialized snake, the classical snake does not approximate the shape of the niche correctly. This is because of the same reason as that it was unable to find the cavity in the u shape as explained in exercise 1.
 

@@ -110,32 +110,58 @@ When testing the effects of the resolution parameters, the application indeed ra
 \subsection{}
 The most inportant differences in behaviour between GVF and classical snakes for the u shape are the following. 
 
-Firstly, when not smoothing the image, the classical snake cannot approximate the contour of the cavity while the GVF snake can. The classical snake experiences only horizontal forces at the inner edges of the fingers. Therefore it is not propegated into the cavity (see \ref{fig1}). With GVF, the nodes inbetween the fingers do experience downwards forces and there does succeed in finding the cavity (see \ref{fig2}).
+Firstly, when not smoothing the image, the classical snake cannot approximate the contour of the cavity while the GVF snake can. The classical snake experiences only horizontal forces at the inner edges of the fingers. Therefore it is not propegated into the cavity (see \ref{fig1a}). With GVF, the nodes inbetween the fingers do experience downwards forces and there does succeed in finding the cavity (see \ref{fig1b}).
 
 \begin{figure}
 \centering
 \begin{subfigure}{0.49\textwidth}
   \centering
   \includegraphics[width=\linewidth]{fig1.png}
-  \caption{The U-shape using the classical snake ($\alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2,Iterat=400$)}
-  \label{fig1}
+  \caption{The U-shape using the classical snake ($\alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2,Iterat=400$).}
+  \label{fig1a}
 \end{subfigure}
 \begin{subfigure}{0.49\textwidth}
   \centering
   \includegraphics[width=\linewidth]{fig2.png}
-  \caption{The U-shape using the GVF snake ($\mu=0.1, Iterations=90, \alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2,Iterat=400$)}
-  \label{fig2}
+  \caption{The U-shape using the GVF snake ($\mu=0.1, Iterations=90, \alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2,Iterat=400$).}
+  \label{fig1b}
 \end{subfigure}
 \caption{Results for the noon-smoothed image of the U-shape.}
 \end{figure}
 
-Furthermore, the GVF snake also finds a good solution when it is initialized entirely within the u shape, while the classical snake does not, because the GVF snake has external forces within the u shape, while classical snake lacks these. 
+Furthermore if the snake is initialized within the U-shape, the GVF can sometimes still find the right solution, because there is an external force field within the shape. The classical snake however, if initialized too far from the edges, can never find the right shape, because of the lack of force vectors. Instead it shrinks down because of the internal force. See also figure \ref{fig2}.
+
+\begin{figure}
+\centering
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig2a.png}
+  \caption{Initializing the classical snake within the U-shape places it outside of any external force field.}
+  \label{fig2a}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig2b.png}
+  \caption{Results of the classical snake when initialized within the U-shape after 400 iterations ($\alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2,Iterat=400$).}
+  \label{fig2b}
+\end{subfigure}
+\caption{Initializing the snake within the U-shape.}
+\label{fig2}
+\begin{subfigure}{0.49\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig3.png}
+  \caption{Results of the classical snake for a smoothed image with $\sigma=3$ ($\alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2,Iterat=400$).}
+  \label{fig3}
+\end{subfigure}
+\end{figure}
 
 Also, because of the small capture range of the classical snake with respect to the GVF snake, the classical snake converges more slowly than the GVF snake when it is initialized as a large circle around the u shape. 
 
 We consider the GVF snake to perform better than the classical snake because of the reasons mentioned above. 
 
-Finally, as stated above, the classical snake does not converge into the 'dip' except when the image is smoothed with a large enough sigma. GVF is also able to converge into the 'dip' when the image is not smoothed. 
+Finally, as stated above, the classical snake does not converge into the 'dip' unless image is smoothed with a large enough sigma (see figure \ref{fig3}). GVF is also able to converge into the 'dip' when the image is not smoothed (figure \ref{fig1b}).
+
+
 
 \subsection{}
 If the snakes are initialized as a circle around the room, classical snakes converge very well, given enough iterations. GVF snakes need less iterations to converge, but they represent the corners in the figure less accurately. This is because of the smoothing term in equation 12 of the paper. This smoothing causes the force vectors around a corner to point towards the location where the force vectors pointing towards the perpendicular edges are averaged. 
