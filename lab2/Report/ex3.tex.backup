@@ -5,4 +5,14 @@ With GVF, the shape of both lungs can be approximated quite well, even without s
 
 
 ex4
-Again, the classical snake did not find a good solution without smoothing. With smoothing, for the right lung, the right side of the shape is approximated better in the high contrast image, with respect to the original image. This is probably due to the sharper edge. On the left side of the right lung, the shape of the lung is approximated poorly. This is due to the detail edges that the nodes in the snake stick to.
+Again, the classical snake did not find a good solution without smoothing. With smoothing, for the right lung, the right side of the shape is approximated better in the high contrast image, with respect to the original image. This is probably due to the sharper edge. On the left side of the right lung, the shape of the lung is approximated more poorly in the high contrast image. This is due to the detail edges inside the lung that the nodes in the snake stick to.
+
+With GVF, also without smoothing solutions were found for both lungs. For the left lung, the performance was similar. For the right lung, the performance was better in the bottom part, since for the most part, the actual shape of the lung was found instead of the edge below it. However, there are also some new locations on the shape of the lung in which now an edge outside of the lung is found instead of the edge of the lung itself, where this was not the case with the original image.
+
+When in the images of exercise 3 and 4, beta can be set to a non zero value (e.g. 0.2) to deal with the lines with a dead end that go inside the lung. In this case the overall shape detection does not alter, only the lines going inward with a dead end are deleted.
+
+ex6
+Key problems:
+The snakes needs to be initialized in a way that it can find the shape. 
+
+The two methods can be combined in a way to get better results. For example with 'room.pgm', the classical snake only finds a good solution if the entire room is inside the snake at the initialisation. The GVF approach does always find a good solution, but it doesn't represent the corners very well. By first letting the GVF snake find a solution and afterwards optimizing this solution with the classical snake, the better solution can be found even if not the entire room is inside the snake at the initialisation.
