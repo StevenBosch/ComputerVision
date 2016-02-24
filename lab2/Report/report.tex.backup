@@ -112,7 +112,7 @@ The most inportant differences in behaviour between GVF and classical snakes for
 
 Firstly, when not smoothing the image, the classical snake cannot approximate the contour of the cavity while the GVF snake can. The classical snake experiences only horizontal forces at the inner edges of the fingers. Therefore it is not propegated into the cavity (see \ref{fig1a}). With GVF, the nodes inbetween the fingers do experience downwards forces and there does succeed in finding the cavity (see \ref{fig1b}).
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \centering
 \begin{subfigure}{0.49\textwidth}
   \centering
@@ -131,7 +131,7 @@ Firstly, when not smoothing the image, the classical snake cannot approximate th
 
 Furthermore if the snake is initialized within the U-shape, the GVF can sometimes still find the right solution, because there is an external force field within the shape. The classical snake however, if initialized too far from the edges, can never find the right shape, because of the lack of force vectors. Instead it shrinks down because of the internal force. See also figure \ref{fig2}.
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \centering
 \begin{subfigure}{0.49\textwidth}
   \centering
@@ -166,7 +166,7 @@ Finally, as stated above, the classical snake does not converge into the 'dip' u
 \subsection{}
 If the snakes are initialized as a circle around the room, classical snakes converge very well, given enough iterations. GVF snakes need less iterations to converge, but they represent the corners in the figure less accurately. This is because of the smoothing term in equation 12 of the paper. This smoothing causes the force vectors around a corner to point towards the location where the force vectors pointing towards the perpendicular edges are averaged.
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \centering
 \begin{subfigure}{0.49\textwidth}
   \centering
@@ -195,7 +195,7 @@ The performance of the GVF is quite robust with respect to the initialization, w
 \subsection{}
 When using the classical snake, the shape of the lungs is not approximated well for any parameter setting, without smoothing the image first. When the image is smoothed with $\sigma$ = 3, the left edge of the left lung and almost the entire right lung are approximated well (see figure \ref{fig4}). This is because the smoothing causes the radius in which an edge causes force vectors to point towards it to become larger. Even though the entire snake is initialized within the lung and therefore the internal forces do not automatically cause the snake to converge towards the shape, when the image is smoothed external forces are enough in this case to propagate the nodes of snake towards the edges.
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \centering
 \begin{subfigure}{0.49\textwidth}
   \centering
@@ -228,14 +228,83 @@ When using the classical snake, the shape of the lungs is not approximated well 
 With GVF, the shape of both lungs can be approximated quite well, even without smoothing (see figure \ref{fig4c} and \ref{fig4d}. This is because now, external forces cause the snake to converge to the shape of the lungs, because of the first term of equation 12 in the paper. There are some edges within the left lung that some nodes of the snake stick to, especially when no smoothing is applied. In the right lung, the bottom edge of the lung is ignored. This is because of the large force caused by the sharper edge below this bottom edge.
 
 \subsection{}
+Again, the classical snake did not find a good solution without smoothing, but with smoothing the results were acceptable (see figures \ref{b} and \ref{e}). For the right lung, the right side of the shape is approximated better in the high contrast image, with respect to the original image. This is probably due to the sharper edge. On the left side of the right lung, the shape of the lung is approximated more poorly in the high contrast image. This is due to the detail edges inside the lung that the nodes in the snake stick to.
+
+With GVF again the non-smoothed images provided better results than the smoothed ones (see figures \ref{c} and \ref{f}). For the left lung, the performance was similar. For the right lung, the performance was better in the bottom part, since for the most part, the actual shape of the lung was found instead of the edge below it. However, there are also some new locations on the shape of the lung in which now an edge outside of the lung is found instead of the edge of the lung itself, where this was not the case with the original image.
+
+In both figure \ref{fig4} and \ref{figurebla} we can see loose ends in some locations. To solve this the parameter $\beta$ can be set to a non zero value (e.g. 0.2), which does not alter the overall shape detection, but does remove the lines going inward with a dead end.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{newLeftinit.png}
+  \caption{Left initialization.}
+  \label{a}
+\end{subfigure}
+\begin{subfigure}{0.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{newLeftclassical.png}
+  \caption{Using the classical snake for the right chest at convergence ($\alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2$).}
+  \label{b}
+\end{subfigure}
+\begin{subfigure}{0.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{newLeftGFV.png}
+  \caption{Using the GVF snake for the left chest at convergence ($\mu=0.1, Iterations=90, \alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2$).}
+  \label{c}
+\end{subfigure}
+\begin{subfigure}{0.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{newRightinit.png}
+  \caption{Right initialization.}
+  \label{d}
+\end{subfigure}
+\begin{subfigure}{0.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{newRightclassical.png}
+  \caption{Using the classical snake for the right chest at convergence ($\alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2$).}
+  \label{e}
+\end{subfigure}
+\begin{subfigure}{0.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{newRightGFV.png}
+  \caption{Using the GVF snake for the right chest at convergence ($\mu=0.1, Iterations=90, \alpha=0.05, \beta=0, \gamma=1,\kappa=0.6,Dmin=0.5,Dmax=2$).}
+  \label{f}
+\end{subfigure}
+\caption{Results for the new image.}
+\label{figurebla}
+\end{figure}
 
 \subsection{}
 Figure \ref{fig6} shows the results for the non-smoothed heart images, using the initializations defined in heart.mat and heart1.mat. The figure shows that the classical snake does not perform very well. This can be well explained by its force vector field, which is shown in figure \ref{fig7a}. As we can observe, the force vectors are `all over the place'. There is no clear direction to be discovered in the force vectors, which is probably caused by the noise in the image. Therefore the resulting snakes (figures \ref{fig6a} and \ref{fig6b}) show no clear smoothed lines.
 On the other hand the force vector field of the GVF method shows much clearer patterns (see figure \ref{fig7b}, resulting in far better results figures \ref{fig6c} and \ref{fig6d}).
 
-When we smooth the image with $\sigma=3$, we get the results shown in \ref{fig8}.
+When we smooth the image with $\sigma=3$, we get the results shown in \ref{fig8}. As we can see the classical snake already performs better than for the non smoothed image, which is logical if we look at the force vector field it has now (figure \ref{fig9a}). This already shows a lot more pattern than with the non-smoothed image. Still the results are not optimal, especially for the initialization of heart1.mat (figure \ref{fig8b}). Here we can actually see two circles and some loose ends. As we mentioned above, these loose ends can partially be solved by changing some parameter settings, like $\beta$ for example. So overall the progress is considerable. 
 
-\begin{figure}[h!]
+For the GVF method, we see that the final snake has become smoother as well. Some for the better, some for the worse. Overall the shape has been approximated better (which is natural, since in biological systems there hardly exist sharp edges). On the other hand some non-heart areas have also been included in the snake, for example in the bottom right area. In the depends on the application which of these results would be preferred.
+
+Overall the methods handle the noise quite well. Since the results for the GVF method were so good, we did not even have to change the $\mu$ value (according to the article for noisy images GVF yields better results when using a higher $\mu$).
+However, for different initializations than the two that were supplied, both of the methods often find bad solutions. This is obviously a large pitfall to snakes, as they still need a lot of parameters set right in order for them to convey any useful information.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig7a.png}
+  \caption{The force vector field for the classical snake.}
+  \label{fig7a}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig7b.png}
+  \caption{The force vector field for GVF ($\mu = 0.1, Iterations=80$).}
+  \label{fig7b}
+\end{subfigure}
+\caption{Force vector fields for heart.pgm.}
+\end{figure}
+
+\begin{figure}[H]
 \centering
 \begin{subfigure}{0.49\textwidth}
   \centering
@@ -265,25 +334,25 @@ When we smooth the image with $\sigma=3$, we get the results shown in \ref{fig8}
 \label{fig6}
 \end{figure}
 
-
-\begin{figure}[h!]
+\begin{figure}[H]
 \centering
 \begin{subfigure}{0.49\textwidth}
   \centering
-  \includegraphics[width=\linewidth]{fig7a.png}
+  \includegraphics[width=\linewidth]{fig9a.png}
   \caption{The force vector field for the classical snake.}
-  \label{fig7a}
+  \label{fig9a}
 \end{subfigure}
 \begin{subfigure}{0.49\textwidth}
   \centering
-  \includegraphics[width=\linewidth]{fig7b.png}
+  \includegraphics[width=\linewidth]{fig9b.png}
   \caption{The force vector field for GVF ($\mu = 0.1, Iterations=80$).}
-  \label{fig7b}
+  \label{fig9b}
 \end{subfigure}
-\caption{Force vector fields for heart.pgm.}
+\caption{Force vector fields for the smoothed heart.pgm ($\sigma=3$).}
+\label{fig9}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \centering
 \begin{subfigure}{0.49\textwidth}
   \centering
@@ -313,22 +382,7 @@ When we smooth the image with $\sigma=3$, we get the results shown in \ref{fig8}
 \label{fig8}
 \end{figure}
 
-\begin{figure}[h!]
-\centering
-\begin{subfigure}{0.49\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{fig9a.png}
-  \caption{The force vector field for the classical snake.}
-  \label{fig9a}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{fig9b.png}
-  \caption{The force vector field for GVF ($\mu = 0.1, Iterations=80$).}
-  \label{fig9b}
-\end{subfigure}
-\caption{Force vector fields for the smoothed heart.pgm ($\sigma=3$).}
-\label{fig9}
-\end{figure}
+\subsection{}
+On the one hand it is interesting to see what snake-based segmentation can achieve by using 
 
 \end{document}
