@@ -1,0 +1,7 @@
+ex3
+When using the classical snake, the shape of the lungs is not approximated well for any parameter setting, without smoothing the image first. When the image is smoothed with $\sigma$ = 3, the left edge of the left lung and almost the entire right lung are approximated well. This is because the smoothing causes the radius in which an edge causes force vectors to point towards it to become larger. Even though the entire snake is initialized within the lung and therefore the internal forces do not automatically cause the snake to converge towards the shape, when the image is smoothed external forces are enough in this case to propegate the nodes of snake towards the edges.
+
+With GVF, the shape of both lungs can be approximated quite well, even without smoothing. This is because now, external forces cause the snake to converge to the shape of the lungs, because of the first term of equation 12 in the paper. There are some edges within the left lung that some nodes of the snake stick to, especially when no smoothing is applied. In the right lung, the bottom edge of the lung is ignored. This is because of the large force caused by the sharper edge below this bottom edge.
+
+
+ex4
