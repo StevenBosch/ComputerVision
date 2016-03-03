@@ -111,11 +111,10 @@ u_{\infty 1} \\ v_{\infty 1} \\ f
 u_{\infty 2} \\ v_{\infty 2} \\ f
 \end{array}
 \right)  = 0 \\
-\frac{1}{\sqrt{u_{\infty 1}^2+v_{\infty 1}^2+f^2}} * \frac{1}{\sqrt{u_{\infty 2}^2+v_{\infty 2}^2+f^2}} (u_{\infty 1}u_{\infty 2}+v_{\infty 1}v_{\infty 2} + f^2) = 0 \\
-u_{\infty 1}u_{\infty 2}+v_{\infty 1}v_{\infty 2} + f^2 = 0 \\
-f = \sqrt{-(u_{\infty 1}u_{\infty 2}+v_{\infty 1}v_{\infty 2})}
 \end{align}
-Now that we have determined $f$, we can calculate the direction vectors $\vec{l}$ and $\vec{k}$ as described in equations 1 and 2 above. Finally we can determine the normal of the planar patch containing the rectangles as the cross product of the direction vectors: $\vec{l} \times \vec{k}$.
+
+
+
 
 \section{}
 Done
