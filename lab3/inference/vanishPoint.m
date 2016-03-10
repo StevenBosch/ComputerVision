@@ -1,5 +1,9 @@
-function vanishPoints = vanishPoints(data)
-
+function vanishPoint = vanishPoint(data)
+    % This functions determines the vanishing point of the given set of points 
+    % by calculating the linear functions per set of coordinates, and calculating 
+    % all the intersections of those linear functions. Finally it returns
+    % the median of those vanishing points as the final vanishing point
+    
     linFunctions = zeros(length(data(:,1)),2);
     
     % Determine the linear function per set of points
@@ -22,3 +26,5 @@ function vanishPoints = vanishPoints(data)
             end
         end
     end
+    
+    vanishPoint = median(vanishPoints);

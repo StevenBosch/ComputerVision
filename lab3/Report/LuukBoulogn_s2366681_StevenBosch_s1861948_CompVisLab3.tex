@@ -115,14 +115,35 @@ u_{\infty 2} \\ v_{\infty 2} \\ f
 u_{\infty 1}u_{\infty 2}+v_{\infty 1}v_{\infty 2} + f^2 = 0 \\
 f = \sqrt{-(u_{\infty 1}u_{\infty 2}+v_{\infty 1}v_{\infty 2})}
 \end{align}
-Now that we have determined $f$, we can calculate the direction vectors $\vec{l}$ and $\vec{k}$ as described in equations 1 and 2 above. Finally we can determine the normal of the planar patch containing the rectangles as the cross product of the direction vectors: $\vec{l} \times \vec{k}$.
+Now that we have determined $f$, we can calculate the direction vectors $\vec{l}$ and $\vec{k}$ as described in equations 1 and 2 above. Finally we can determine the normal of the planar patch containing the rectangles as the cross product of the direction vectors: $\vec{l} \times \vec{k}$. 
 
 \section{}
 We have created the files containing the scanpoint of the parallel lines.
 
-\stepcounter{section}
+\section{}
+The function \texttt{par\_line.m} calculates the direction vector of a given set of points that represent parallel lines according to the method given in section 4.2.2.
 
 \section{}
+We wrote three distinct functions for this exercise. The function \texttt{myRectangle} reads in the sets of points using the provided function \texttt{readfile}. It then calls upon the function \texttt{vanishPoint} to calculate the vanishing points of the sets of points. \texttt{vanishPoint} receives one set of lines that are parallel in 3D and calculates its vanishing point in the following manner:
 
+\begin{enumerate}
+ \item For every set of two points describing a line, its linear function is calculated as $y = ax + b$, where $a$ is calculated as $a = \frac{y_1-y_2}{x_1-x_2}$ and b as $b = y_1 - a*x_1$.
+ \item The intersection of all combinations of two linear functions are calculated as follows: $x = \frac{b_1 - b_2}{a_2 - a_1}$ and $y = a_1*x + b_1$.
+ \item Finally the median of all these points is returned as vanishing point. We use the median as it is robust to outliers (inaccurate clicks) and therefore gives the best representation of the actual vanishing points.
+\end{enumerate}
+
+With the acquired vanishing points the camera constant $f$ is determined as described in exercise 1, equation 7. Subsequently the function \texttt{dirVector} is called on with a data set of points and the calculated camera constant. In \texttt{dirVector} the direction vector of the given set of points is calculated in the same way as in \texttt{par\_line.m} and returned.
+
+Finally the normal of the planar patch containing the rectangles is calculated as the cross product of the two direction vectors.
+
+\subsection{Output}
+We created two files containg points and call upon the function using \texttt{myRectangle('par\_lines.dat', 'par\_lines2.dat')}. It yields the following output:
+
+\begin{lstlisting}
+The camera constant f = 1201.211921
+The first direction vector: (-0.626905 0.578391 0.521971)
+The second direction vector: (0.807287 0.386091 0.446341)
+The normal of the planar patch is: (0.056632 0.701194 -0.708971)
+\end{lstlisting}
 
 \end{document}
