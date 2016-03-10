@@ -1,16 +1,15 @@
 function similarities = absdiff(patch, strip)
 
-diffs = length(strip(1,:)) - length(patch(1,:)) + 1;
+diffs = zeros(length(strip(1,:)) - length(patch(1,:)) + 1);
 
 % move it over all positions in the strip the patch has to be compared with
-for it2 = 0 : length(strip(1,:)) - length(patch(1,:))
-    %take a collumn of the patch
-    for it1 = 1:length(patch(1,:)) 
-        % store the differences between the patch and the patch on the
-        % strip
-        diffs(it2+1) = sum( abs(patch(it1,:)-strip(it1+it2,:)) );
-    end
+for it1 = 1 : length(strip(1,:)) - (length(patch(1,:)) -1)
+    
+    % patch2 is the part of the strip overlapping with the patch
+    patch2 = strip(:, it1:it1+length(patch(1,:))-1);
+    
+    %calculate difference
+    diffs(it1) = sum(sum( abs(patch - patch2)));
 end
-
 similarities = -diffs;
 
