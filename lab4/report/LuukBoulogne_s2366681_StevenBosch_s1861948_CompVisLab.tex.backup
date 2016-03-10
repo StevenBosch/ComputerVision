@@ -82,7 +82,9 @@ As we can see from the table, the proportions differ quite significantly. Assumi
 \section{}
 \section{}
 \section{}
-To match the images using SIFT-features we first convert the image into grayscale images and then run the script given in appendix \ref{code:SIFT}. and Figure \ref{matches} shows the matches between the two images. As we can observe, there are only horizontal matches, which was to be expected since the cameras are at the same height.
+To match the images using SIFT-features we first convert the image into grayscale images and then run the script given in appendix \ref{code:SIFT}. In this script we calculate the disparities between the matches that have a maximum difference of two y-pixels and store it together with the coordinates. Furthermore the y-differences and the number of equal y-values and the maximum y-value are stored.
+
+Figure \ref{matches} shows the matches between the two images. As we can observe, the matches are all near-horizontal. However, if we look at the number of equal y-values, this is only 
 
 \begin{figure}
  \centering
