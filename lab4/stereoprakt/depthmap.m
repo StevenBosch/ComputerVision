@@ -19,7 +19,7 @@ for ity = 1 : Iheight
         % gsimilarity = match(patchL(:,:,1), stripR(:,:,2));
         % bsimilarity = match(patchL(:,:,1), stripR(:,:,3));
         
-        xR = max(sim);
+        [~, xR] = max(sim);
         
         %[~, xR] = max(rsimilarity + gsimilarity + bsimilarity);
         
