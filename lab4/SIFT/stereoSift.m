@@ -9,25 +9,24 @@
 % pixels difference in the y-direction and store the coordinates with it
 % For all other matches, calculate the y-difference
 disp = zeros(size(matches, 2), 5);
-yDiff = zeros(size(matches, 2));
+yDiff = zeros(size(matches, 1));
+eqY = 0;
 
-for i = 1: size(des1,1)
+for i = 1: size(matches,2)
   if (matches(i) > 0)
-    if (loc1(i,1) - loc2(matches(i),1) <= 2)
+    if (loc1(i,1) - loc2(matches(i),1) <= 0.5)
         disp(i, 1) = loc1(i,2) - loc2(matches(i),2);
         disp(i, 2) = loc1(i, 2);
         disp(i, 3) = loc1(i, 1);
         disp(i, 4) = loc2(matches(i), 2);
         disp(i, 5) = loc2(matches(i), 1);
     end
+    if (loc1(i,1) - loc2(matches(i),1) == 0)
+        eqY = eqY + 1;
+    end
     yDiff(i) = loc1(i,1) - loc2(matches(i),1);
   end
 end
 
-% Calculate the number of exactly horizontal matches and the max
-% y-difference
-eqY = sum(yDiff(:)==0);
 maxY = max(yDiff(:));
-
-%disp = disp(disp ~= 0,:);
-%yDiff = yDiff(yDiff ~= 0);
+disp(~any(disp,2), :) = [];

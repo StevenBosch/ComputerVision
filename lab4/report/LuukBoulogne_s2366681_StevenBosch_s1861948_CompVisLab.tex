@@ -82,9 +82,11 @@ As we can see from the table, the proportions differ quite significantly. Assumi
 \section{}
 \section{}
 \section{}
-To match the images using SIFT-features we first convert the image into grayscale images and then run the script given in appendix \ref{code:SIFT}. In this script we calculate the disparities between the matches that have a maximum difference of two y-pixels and store it together with the coordinates. Furthermore the y-differences and the number of equal y-values and the maximum y-value are stored.
+To match the images using SIFT-features we first convert the image into grayscale images and then run the script given in appendix \ref{code:SIFT} (this uses a slightly adjusted \texttt{match.m}, which also returns the vector \texttt{match}). In this script we calculate the disparities between the matches that have a maximum difference of two y-pixels and store it together with the coordinates. Furthermore the y-differences and the number of equal y-values and the maximum y-value are stored.
 
-Figure \ref{matches} shows the matches between the two images. As we can observe, the matches are all near-horizontal. However, if we look at the number of equal y-values, this is only 
+Figure \ref{matches} shows the matches between the two images. As we can observe, the matches are all near-horizontal. However, if we look at the number of exactly equal y-values, this is only 20, so most of the matches do not seem to be at the exact same y-coordinate. However, we use as a criterium that the y coordinate can maximally differ 0.5 and of the 446 matches, 433 abide to this criterium. Since Sift somehow changes x-values into floating point numbers, this probably means that all of these 433 values are at the exact same y-coordinate in the actual image. The maximum y-difference however is 12.8, so this is definitely a false match.
+
+The disparities that are calculated are in the same order as the test we did in exercise 1, with a maximum of 13.56 and a minimum of 2.95. When we compare some points to the windowing based methods, we see the following differences...COMPARE METHODS.
 
 \begin{figure}
  \centering
