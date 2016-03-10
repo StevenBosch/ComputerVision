@@ -13,13 +13,14 @@ for ity = 1 : Iheight
     for  itx = 1 : Iwidth
         patchL = IL(ity:ity+ph-1, itx:itx+pw-1, :);
         
-        stripR = IR(ity:ity+ph-1, 1 : itx+pw-1, :); 
+        stripR = IR(ity:ity+ph-1, :, :); 
+        %deze is beter: stripR = IR(ity:ity+ph-1, 1 : itx+pw-1, :); 
         sim = match(patchL, stripR);
         %rsimilarity = match(patchL(:,:,1), stripR(:,:,1));
         % gsimilarity = match(patchL(:,:,1), stripR(:,:,2));
         % bsimilarity = match(patchL(:,:,1), stripR(:,:,3));
-        
-        xR = max(sim);
+
+        [~, xR] = max(sim);
         
         %[~, xR] = max(rsimilarity + gsimilarity + bsimilarity);
         
