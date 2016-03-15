@@ -1,4 +1,4 @@
-function similarities = absdiff(patch, strip)
+function similarities = squareddiff(patch, strip)
 
 diffs = zeros(length(strip(1,:)) - length(patch(1,:)) + 1, 1);
 
@@ -9,7 +9,7 @@ for it1 = 1 : length(strip(1,:)) - (length(patch(1,:)) -1)
     patch2 = strip(:, it1:it1+length(patch(1,:))-1);
     
     %calculate difference
-    diffs(it1) = sum(sum( abs(patch - patch2)));    
+    diffs(it1) = sum(sum((patch - patch2).^2));
 end
 similarities = -diffs;
 
