@@ -12,4 +12,3 @@ for it1 = 1 : length(strip(1,:)) - (length(patch(1,:)) -1)
     diffs(it1) = sum(sum((patch - patch2).^2));
 end
 similarities = -diffs;
-
