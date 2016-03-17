@@ -159,25 +159,145 @@ We started using strips of the full length of the width of the picture. Figure \
 Overall when we look at the differences in performance between the different similarity measures we can state that when we use the whole width (so when we are not `cheating'), the correlation measure by far outperforms the difference measures, since the latter do not distinguish the contours clearly at all. On the other hand when we `cheat' and use a fixed strip size, the performances differ less, but the correlation measure still performs better than the difference measures. 
 
 \section{}
+
+\begin{figure}[ht!]
+ \centering
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{ex3/a5_5g.png}
+  \caption{$5\times5$ gaussian window}
+  \label{fig_a1}
+ \end{subfigure}
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{ex3/a10_10g.png}
+  \caption{$10\times10$ gaussian window}
+  \label{fig_a2}
+ \end{subfigure}
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{ex3/a15_15g.png}
+  \caption{$15\times15$ gaussian window}
+  \label{fig_a3} 
+ \end{subfigure}
+ 
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{ex3/a5_5.png}
+  \caption{$5\times5$ window}
+  \label{fig_a1g}
+ \end{subfigure}
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{ex3/a10_10.png}
+  \caption{$10\times10$ window}
+  \label{fig_a2g}
+ \end{subfigure}
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{ex3/a15_15.png}
+  \caption{$15\times15$ window}
+  \label{fig_a3g}
+ \end{subfigure}
+ \caption{Depth maps constructed using the absolute difference as difference measure with varied window size and shape.}
+ \label{fig_a}
+\end{figure}
+
+\begin{figure}[ht!]
+ \centering
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{ex3/s5_5g.png}
+  \caption{$5\times5$ gaussian window}
+  \label{fig_s1}
+ \end{subfigure}
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{ex3/s10_10g.png}
+  \caption{$10\times10$ gaussian window}
+  \label{fig_s2}
+ \end{subfigure}
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{ex3/s15_15g.png}
+  \caption{$15\times15$ gaussian window}
+  \label{fig_s3} 
+ \end{subfigure}
+ 
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{ex3/s5_5.png}
+  \caption{$5\times5$ window}
+  \label{fig_s1g}
+ \end{subfigure}
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{ex3/s10_10.png}
+  \caption{$10\times10$ window}
+  \label{fig_s2g}
+ \end{subfigure}
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{ex3/s15_15.png}
+  \caption{$15\times15$ window}
+  \label{fig_s3g}
+ \end{subfigure}
+ \caption{Depth maps constructed using the squared difference as difference measure with varied window size and shape.}
+ \label{fig_s}
+\end{figure}
+
+
+
+\begin{figure}[ht!]
+ \centering
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{ex3/x5_5.png}
+  \caption{$5\times5$ window}
+  \label{fig_x1}
+ \end{subfigure}
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{ex3/x10_10.png}
+  \caption{$10\times10$ window}
+  \label{fig_x2}
+ \end{subfigure}
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{ex3/x15_15.png}
+  \caption{$15\times15$ window}
+  \label{fig_x3}
+ \end{subfigure}
+ \caption{Depth maps constructed using the normalized cross correlation as similarity measure with varied window size.}
+ \label{fig_x}
+\end{figure}
+
+The window sizes we compared are $5\times5$, $10\times10$ and $15\times15$. For the absolute difference and squared difference functions, we also changed the shape of the window by multiplying the compared patches with a 2D gaussian window. We compared the results of this with the results when the gaussian window has not been applied. All results are shown in figures \ref{fig_a}, \ref{fig_s} and \ref{fig_x}.
+
+For all window sizes and shapes, the absolute and squared difference methods yielded very similar results. 
+
+For all methods, a larger window size results in a less noisy depth map, but also in a loss of detail with respect to the results of smaller windows. E.g. in figure \ref{fig_x3}, the cable of the lamp is not visible, while in figure \ref{fig_x1} it is.
+
 \section{}
 To match the images using SIFT-features we first convert the image into grayscale images and then run the script given in appendix \ref{code:SIFT} (this uses a slightly adjusted \texttt{match.m}, which also returns the vector \texttt{match}). In this script we calculate the disparities between the matches that have a maximum difference of two y-pixels and store it together with the coordinates. Furthermore the y-differences and the number of equal y-values and the maximum y-value are stored.
 
 Figure \ref{matches} shows the matches between the two images. As we can observe, the matches are all near-horizontal. However, if we look at the number of exactly equal y-values, this is only 20, so most of the matches do not seem to be at the exact same y-coordinate. However, we use as a criterium that the y coordinate can maximally differ 0.5 and of the 446 matches, 433 abide to this criterium. Since Sift somehow changes x-values into floating point numbers, this probably means that all of these 433 values are at the exact same y-coordinate in the actual image. The maximum y-difference however is 12.8, so this is definitely a false match.
 
-The disparities that are calculated are in the same order as the test we did in exercise 1, with a maximum of 13.56 and a minimum of 2.95. We calculated the error based on the difference of disparity between every pixel corresponding to the a found feature by SIFT and the corresponding pixel in the ground truth image (see appendix \ref{code:errorSIFT}. This yields the results given in table \ref{table2}. 
+The disparities that are calculated are in the same order as the test we did in exercise 1, with a maximum of 13.56 and a minimum of 2.95. We calculated the error based on the difference of disparity between every pixel corresponding to the a found SIFT feature and its corresponding pixel in the ground truth image (see appendix \ref{code:errorSIFT}. This yields the results given in table \ref{table2}. 
 
 \begin{table}[!ht]
  \centering
- \caption{Total error of SIFT feature pixels compared to their corresponding pixels in the ground truth}
+ \caption{Total error of the 446 SIFT feature pixels compared to their corresponding pixels in the ground truth}
  \begin{tabular}{c|c}
  Method & Error \\
  \hline
  SIFT & 152 \\
  Absolute difference & 148 \\
- Squared difference & 144
+ Correlation & 144
  \end{tabular}
  \label{table2}
 \end{table}
+The table shows that the SIFT method has the largest total error and the windowing methods have the smaller errors, with the correlation method performing best. The differences do not seem significant however, so it would be necessary to run this comparison for more images than just this one. 
 
 \begin{figure}[ht!]
  \centering

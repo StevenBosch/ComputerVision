@@ -160,6 +160,125 @@ Overall when we look at the differences in performance between the different sim
 
 \section{}
 
+\begin{figure}[ht!]
+ \centering
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{ex3/a5_5g.png}
+  \caption{$5\times5$ gaussian window}
+  \label{fig_a1}
+ \end{subfigure}
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{ex3/a10_10g.png}
+  \caption{$10\times10$ gaussian window}
+  \label{fig_a2}
+ \end{subfigure}
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{ex3/a15_15g.png}
+  \caption{$15\times15$ gaussian window}
+  \label{fig_a3} 
+ \end{subfigure}
+ 
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{ex3/a5_5.png}
+  \caption{$5\times5$ window}
+  \label{fig_a1g}
+ \end{subfigure}
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{ex3/a10_10.png}
+  \caption{$10\times10$ window}
+  \label{fig_a2g}
+ \end{subfigure}
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{ex3/a15_15.png}
+  \caption{$15\times15$ window}
+  \label{fig_a3g}
+ \end{subfigure}
+ \caption{Depth maps constructed using the absolute difference as difference measure with varied window size and shape.}
+ \label{fig_a}
+\end{figure}
+
+\begin{figure}[ht!]
+ \centering
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{ex3/s5_5g.png}
+  \caption{$5\times5$ gaussian window}
+  \label{fig_s1}
+ \end{subfigure}
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{ex3/s10_10g.png}
+  \caption{$10\times10$ gaussian window}
+  \label{fig_s2}
+ \end{subfigure}
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{ex3/s15_15g.png}
+  \caption{$15\times15$ gaussian window}
+  \label{fig_s3} 
+ \end{subfigure}
+ 
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{ex3/s5_5.png}
+  \caption{$5\times5$ window}
+  \label{fig_s1g}
+ \end{subfigure}
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{ex3/s10_10.png}
+  \caption{$10\times10$ window}
+  \label{fig_s2g}
+ \end{subfigure}
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{ex3/s15_15.png}
+  \caption{$15\times15$ window}
+  \label{fig_s3g}
+ \end{subfigure}
+ \caption{Depth maps constructed using the squared difference as difference measure with varied window size and shape.}
+ \label{fig_s}
+\end{figure}
+
+
+
+\begin{figure}[ht!]
+ \centering
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{ex3/x5_5.png}
+  \caption{$5\times5$ window}
+  \label{fig_x1}
+ \end{subfigure}
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{ex3/x10_10.png}
+  \caption{$10\times10$ window}
+  \label{fig_x2}
+ \end{subfigure}
+ \begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{ex3/x15_15.png}
+  \caption{$15\times15$ window}
+  \label{fig_x3}
+ \end{subfigure}
+ \caption{Depth maps constructed using the normalized cross correlation as similarity measure with varied window size.}
+ \label{fig_x}
+\end{figure}
+
+The window sizes we compared are $5\times5$, $10\times10$ and $15\times15$. For the absolute difference and squared difference functions, we also changed the shape of the window applying a a 2D gaussian window to the compared both the patch of the left and of the right images. We compared the results of this with the results when the gaussian window has not been applied. All results are shown in figures \ref{fig_a}, \ref{fig_s} and \ref{fig_x}.
+
+For all window sizes and shapes, the absolute and squared difference methods yielded very similar results. 
+
+For all methods, a larger window size results in a less noisy depth map, but also in a loss of detail with respect to the results of smaller windows. E.g. in figure \ref{fig_x3}, the cable of the lamp is not visible, while in figure \ref{fig_x1} it is.
+
+Furthermore, applying the gaussian window resulted in much better performance of both the absolute and the squared difference methods. When the gaussian window was applied, the depth maps became less noisy and more detailed.
 
 \section{}
 To match the images using SIFT-features we first convert the image into grayscale images and then run the script given in appendix \ref{code:SIFT} (this uses a slightly adjusted \texttt{match.m}, which also returns the vector \texttt{match}). In this script we calculate the disparities between the matches that have a maximum difference of two y-pixels and store it together with the coordinates. Furthermore the y-differences and the number of equal y-values and the maximum y-value are stored.
