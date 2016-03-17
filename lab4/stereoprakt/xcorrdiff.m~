@@ -1,6 +1,0 @@
-function similarities = xcorrdiff(patch, strip)
-
-corr = normxcorr2(patch, strip);
-begin = length(patch(1, :) -)
-similarities = corr(length(patch(:, 1)), :);
-similarities = similarities 
