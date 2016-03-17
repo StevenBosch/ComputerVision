@@ -100,10 +100,51 @@ A_{diff} =
  \end{pmatrix} 
 \end{equation}
 
-We then sum the elements of the resulting matrices to get the summed difference measures for the pixel of the left image and every pixel in the right image at the same y-coordinate. Finally we return the vector containing these similarity values multiplied by -1, so that we can take the maximum similarity in the function \texttt{depthmap.m} as discussed above. In \ref{code:squareddiff.m} we do the same except that here we square the differences before we sum them.
+We then sum the elements of the resulting matrices to get the summed difference measures for the pixel of the left image and every pixel in the right image at the same y-coordinate. Finally we return the vector containing these similarity values multiplied by -1, so that we can take the maximum similarity in the function \texttt{depthmap.m} as discussed above. In \texttt{squareddiff.m} (\ref{code:squareddiff}) we do the same except that here we square the differences before we sum them.
+Finally in \texttt{xcordiff.m} \ref{code:xcorrdiff} we take the convolution of the given patch and strip, which yields a matrix with the normalized correlation values. Taking the maximum value in this matrix gives us the x coordinate of the best matching pixel.
 
-Finally in \ref{code:xcorrdiff}
+\subsection{Results}
+For these results we used patch sizes of 15 by 15.
 
+We started using strips of the full length of the width of the picture. Figure \ref{fig1} shows results for the absolute and squared difference measures. The figure shows quite poor results. This probably has to do with the fact that often the algorithm finds a place in the image that has a large resemblance, but is very far away from the original place. This means that the image of course shows a lot of high pixel values. To avoid this problem we decided to use strips that do not cover the whole width of the image, but strips with as maximum width the maximum depth of the image with a small margin (15), which we determined in exercise 1. Moreover we shift the strip away from the pixel as much as the minimum depth of the image (5). Figure \ref{fig2} shows the results for the absolute and squared difference for these strips. As we can see these images show far better results, but the downfall to this method of course is that it needs a lot of human input. A human first has to determine the maximum and minimum depth of the image using manual techniques as we did in exercise 1, before the window of the strip can be determined. 
+
+\begin{figure}[h!]
+ \centering
+ \begin{subfigure}{.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{abs_dev15.png}
+  \caption{Absolute difference}
+  \label{fig1a}
+ \end{subfigure}
+ \begin{subfigure}{.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{squared_dev15.png}
+  \caption{Squared difference}
+  \label{fig1b}
+ \end{subfigure}
+ \caption{Depth maps using the whole width as strip}
+ \label{fig1}
+\end{figure}
+
+\begin{figure}[h!]
+ \centering
+ \begin{subfigure}{.49\textwidth}
+  \centering
+  \includegraphics[width=1.2\linewidth]{abs_patch15.png}
+  \caption{Absolute difference}
+  \label{fig2a}
+ \end{subfigure}
+ \begin{subfigure}{.49\textwidth}
+  \centering
+  \includegraphics[width=1.2\linewidth]{squared_patch15.png}
+  \caption{Squared difference}
+  \label{fig2b}
+ \end{subfigure}
+ \caption{Depth maps using a strip of 5 to 15 x difference.}
+ \label{fig2}
+\end{figure}
+
+We did the same thing for the correlation similarity measure. Figure \ref{fig3a} shows the depthmap using the correlation when the strip covers the whole width of the image and figure \ref{fig3b} shows the depthmap for strips of window
 
 \section{}
 \section{}
@@ -122,8 +163,10 @@ The disparities that are calculated are in the same order as the test we did in 
 
 \begin{appendices}
 \section{Code}
-\lstinputlisting[caption={Depthmap.m},label={code:depthmap}]{../stereoprakt/depthmap.m}
-\lstinputlisting[caption={Absdiff.m},label={code:absdiff}]{../stereoprakt/absdiff.m}
+\lstinputlisting[caption={depthmap.m},label={code:depthmap}]{../stereoprakt/depthmap.m}
+\lstinputlisting[caption={absdiff.m},label={code:absdiff}]{../stereoprakt/absdiff.m}
+\lstinputlisting[caption={squareddiff.m},label={code:squareddiff}]{../stereoprakt/squareddiff.m}
+\lstinputlisting[caption={xcorrdiff.m},label={code:xcorrdiff}]{../stereoprakt/absdiff.m}
 \lstinputlisting[caption={Script to determine the disparities using SIFT-features},label={code:SIFT}]{../SIFT/stereoSift.m}
 \end{appendices}
 
