@@ -77,16 +77,39 @@ Calculating the disparity as $u_L - u_R$ gives us the following disparities for 
  \label{table1}
 \end{table}
 
-As we can see from the table, the proportions differ quite significantly. Assuming that the ground truth is completely accurate, our method does not seem very accurate, in contrast to our expectations. We expected the result to be quite accurate, since we take exactly the same locations in 3D and we, as humans, are very good at recognizing similar points in two images. What we lack though, is the capacity to determine exact curvature of edges, which is what a computer of course is capable of. Perhaps that has influenced our manual selection in such a way that we were inaccurate. However, as we explained above, it is probably not best to use edges of 3D objects, since those edges do not always represent the same 3D locations on two images taken from different angles. What a computer also is better in, is to take the average x and y coordinate of a blob (feature). This can be useful, since from different angles the same blob can have different sizes and you would want to take the middle of the blob to be able to compare the two. In this case we, as humans, just had to guess the middle, while a computer can just calculate the average.
+As we can see from the table, the proportions differ quite significantly. Assuming that the ground truth is completely accurate, our method does not seem very accurate, in contrast to our expectations. We expected the result to be quite accurate, since we take exactly the same locations in 3D and we, as humans, are very good at recognizing similar points in two images. What we lack though, is the capacity to determine exact curvature of edges, which is what a computer of course is capable of. Perhaps that has influenced our manual selection in such a way that we were inaccurate. However, as we explained above, it is probably not best to use edges of 3D objects, since those edges do not always represent the same 3D locations on two images taken from different angles. What a computer also is better in, is to take the average x and y coordinate of a blob (feature). This can be useful, since from different angles the same blob can have different sizes and you would want to take the middle of the blob to be able to compare the two. In this case we, as humans, had to guess the middle, while a computer can just calculate the average.
 
 \section{}
+Appendix \ref{code:depthmap} shows our Matlab function to compute the disparity based on a windowing method. In \texttt{depthmap.m} we go through the image from the left camera taking patches of pixels that we compare to strips of pixels in the right camera image of the same y coordinates (we operate under the assumption that the cameras are localized at the same hight). For every patch and strip we use a matching function that determine the difference between the patch of the left image and every same sized patch within the strip of the right image, so this returns a vector with similarity values for that specific patch with that specific strip. Taking the maximum value from this vector gives us the x-coordinate of the most similar pixel from the right image. Finally we calculate the distance between the x-coordinate of this pixel in the left image and its corresponding pixel in the right image as measure of depth. The output of the function is a new image containing all these distances.
+
+The similarity measures we use are given in appendices \ref{code:absdiff}, \ref{code:squareddiff} and \ref{code:xcorrdiff}. In \texttt{absdiff.m} we first calculate the difference between a patch of the left image and all of the same sized patches in the given strip of the right image as follows:
+\begin{equation}
+A_{diff} = 
+ \begin{pmatrix}
+  l_{1,1} & l_{1,2} & \cdots & l_{1,n} \\
+  l_{2,1} & l_{2,2} & \cdots & l_{2,n} \\
+  \vdots  & \vdots  & \ddots & \vdots  \\
+  l_{m,1} & l_{m,2} & \cdots & l_{m,n} 
+ \end{pmatrix}
+-
+ \begin{pmatrix}
+  r_{1,1} & r_{1,2} & \cdots & r_{1,n} \\
+  r_{2,1} & r_{2,2} & \cdots & r_{2,n} \\
+  \vdots  & \vdots  & \ddots & \vdots  \\
+  r_{m,1} & r_{m,2} & \cdots & r_{m,n} 
+ \end{pmatrix} 
+\end{equation}
+
+We then sum the elements of the resulting matrices to get the summed difference measures for the pixel of the left image and every pixel in the right image at the same y-coordinate. Finally we return the vector containing these similarity values multiplied by -1, so that we can take the maximum similarity in the function \texttt{depthmap.m} as discussed above. In \ref{code:squareddiff} we do the same except that here we square the differences before we sum them.
+Finally in \ref{code:xcorrdiff} we take the convolution of the given patch and strip, which yields a matrix with the normalized correlation values. Taking the maximum value in this matrix gives us the x coordinate of the best matching pixel.
+
 \section{}
 \section{}
 To match the images using SIFT-features we first convert the image into grayscale images and then run the script given in appendix \ref{code:SIFT} (this uses a slightly adjusted \texttt{match.m}, which also returns the vector \texttt{match}). In this script we calculate the disparities between the matches that have a maximum difference of two y-pixels and store it together with the coordinates. Furthermore the y-differences and the number of equal y-values and the maximum y-value are stored.
 
 Figure \ref{matches} shows the matches between the two images. As we can observe, the matches are all near-horizontal. However, if we look at the number of exactly equal y-values, this is only 20, so most of the matches do not seem to be at the exact same y-coordinate. However, we use as a criterium that the y coordinate can maximally differ 0.5 and of the 446 matches, 433 abide to this criterium. Since Sift somehow changes x-values into floating point numbers, this probably means that all of these 433 values are at the exact same y-coordinate in the actual image. The maximum y-difference however is 12.8, so this is definitely a false match.
 
-The disparities that are calculated are in the same order as the test we did in exercise 1, with a maximum of 13.56 and a minimum of 2.95. When we compare some points to the windowing based methods, we see the following differences...COMPARE METHODS.
+The disparities that are calculated are in the same order as the test we did in exercise 1, with a maximum of 13.56 and a minimum of 2.95. When we compare some points to the windowing based methods, we see the following differences...\textbf{COMPARE METHODS}.
 
 \begin{figure}
  \centering
@@ -97,6 +120,10 @@ The disparities that are calculated are in the same order as the test we did in 
 
 \begin{appendices}
 \section{Code}
+\lstinputlisting[caption={depthmap.m},label={code:depthmap}]{../stereoprakt/depthmap.m}
+\lstinputlisting[caption={absdiff.m},label={code:absdiff}]{../stereoprakt/absdiff.m}
+\lstinputlisting[caption={squareddiff.m},label={code:squareddiff}]{../stereoprakt/squareddiff.m}
+\lstinputlisting[caption={xcorrdiff.m},label={code:xcorrdiff}]{../stereoprakt/absdiff.m}
 \lstinputlisting[caption={Script to determine the disparities using SIFT-features},label={code:SIFT}]{../SIFT/stereoSift.m}
 \end{appendices}
 
